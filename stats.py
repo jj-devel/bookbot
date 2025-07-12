@@ -1,19 +1,12 @@
-path_to_book = "books/frankenstein.txt"
-
 def get_book_text(filepath):
     with open(filepath) as f:
         book_text = f.read()
     return book_text
 
-
-words = get_book_text(path_to_book).split()
-chars_list = list(get_book_text(path_to_book))
-chars = [char.lower() for char in chars_list]
-
-def word_count():
+def word_count(words):
     return len(words)
 
-def char_count():
+def char_count(chars):
     char_dict = {}
     for char in chars:
         if char not in char_dict:
@@ -22,15 +15,14 @@ def char_count():
             char_dict[char] += 1
     return char_dict
 
-# NEEDS FIXED! 
-def sort_char_count():
+def sort_key(list):
+    return list["count"]
+
+def sort_char_count(chars):
+    char_dict = char_count(chars)
     char_dict_list = []
-    char_dict = char_count()
-    for char in chars:
-        dict_template = {"char": "", "count": 0}
-        dict_template["char"] = char
-        dict_template["count"] = char_dict[char]
-        char_dict_list.append(dict_template)
-    char_dict_list.sort(reverse=True, key=char_dict)
+    for char in char_dict:
+        if char.isalpha() == True:
+            char_dict_list.append({"char": char, "count": char_dict[char]})
+    char_dict_list.sort(reverse=True, key=sort_key)
     return char_dict_list
-    
